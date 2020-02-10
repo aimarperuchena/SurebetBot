@@ -1,0 +1,7 @@
+urllib3
+pymysql
+urlopen
+request
+requests
+beautifulsoup4
+date
