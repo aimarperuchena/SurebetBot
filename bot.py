@@ -35,7 +35,7 @@ def leer():
     contSurebets = 0
     contPartidos = 0
     tomorrow = today + datetime.timedelta(days=1)
-    print(tomorrow)
+ 
     div_contenedor = soup2.find("div", {"id": "contenedor_lista_partidos"})
     div_partido = div_contenedor.findAll("div", {"id": "contenedor_evento"})
     for partido in div_partido:
@@ -146,6 +146,6 @@ def leer():
                 percentage = 100-percentage
                 enviarPost(match, d1, team1, team2, odd1, odd2, odd3,
                            bookie1_id, bookie2_id, bookie3_id, percentage,today)
-    print("bucle")
+    
 
 leer()
