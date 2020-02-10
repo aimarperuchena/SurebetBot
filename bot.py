@@ -139,13 +139,12 @@ def leer():
             if odd1 != 0 and odd2 != 0 and odd3 != 0:
                 contPartidos = contPartidos+1
                 percentage = (1/odd1)+(1/odd2)+(1/odd3)
-                if percentage < 1:
-                    contPartidos = contPartidos+1
-                    match = team1+" vs "+team2
-                    percentage = percentage*100
-                    percentage = 100-percentage
-
-                    enviarPost(match, d1, team1, team2, odd1, odd2, odd3,
+                """ if percentage < 1: """
+                contPartidos = contPartidos+1
+                match = team1+" vs "+team2
+                percentage = percentage*100
+                percentage = 100-percentage
+                enviarPost(match, d1, team1, team2, odd1, odd2, odd3,
                            bookie1_id, bookie2_id, bookie3_id, percentage,today)
     print("bucle")
 
