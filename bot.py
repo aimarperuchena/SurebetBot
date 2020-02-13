@@ -14,9 +14,9 @@ from urllib.request import Request, urlopen
 def enviarPost(match, date, team1, team2, odd1, odd2, odd3, bookie1, bookie2, bookie3, percentage,today):
   
     fecha = today.strftime("%Y-%m-%d")
-    url = 'https://aimarsurebet.herokuapp.com/api/surebet'
+    url = 'http://192.168.0.12:1234/api/surebet'
     objeto = {'match': match, 'date': fecha, 'team1': team1, 'team2': team2, 'odd1': odd1, 'odd2': odd2,
-              'odd3': odd3, 'bookie1_id': bookie1, 'bookie2_id': bookie2, 'bookie3_id': bookie3, 'percentage': percentage}
+              'odd3': odd3, 'bookie1': bookie1, 'bookie2': bookie2, 'bookie3': bookie3, 'percentage': percentage}
     x = requests.post(url, data=objeto)
     print(x.text)
 
@@ -35,7 +35,7 @@ def leer():
     contSurebets = 0
     contPartidos = 0
     tomorrow = today + datetime.timedelta(days=1)
- 
+    print(tomorrow)
     div_contenedor = soup2.find("div", {"id": "contenedor_lista_partidos"})
     div_partido = div_contenedor.findAll("div", {"id": "contenedor_evento"})
     for partido in div_partido:
@@ -79,40 +79,40 @@ def leer():
                     link = a_link['href']
                     if "bet365" in link:
                         bookie = "bet365"
-                        bookieId = 1
+                        bookieId = "Bet365"
                     if "codere" in link:
                         bookie = "codere"
-                        bookieId = 2
+                        bookieId = "Codere"
                     if "bwin" in link:
                         bookie = "bwin"
-                        bookieId = 3
+                        bookieId = "BWin"
                     if "marathonbet" in link:
                         bookie = "marathon bet"
-                        bookieId = 4
+                        bookieId = "MarathonBet"
                     if "luckia" in link:
                         bookie = "luckia"
-                        bookieId = 5
+                        bookieId = "Luckia"
                     if "sportium" in link:
                         bookie = "sportium"
-                        bookieId = 6
+                        bookieId = "Sportium"
                     if "betway" in link:
                         bookie = "betway"
-                        bookieId = 7
+                        bookieId = "Betway"
                     if "marcaapuestas" in link:
                         bookie = "marca apuestas"
-                        bookieId = 8
+                        bookieId = "MarcarApuestas"
                     if "willhill" in link:
                         bookie = "william hill"
-                        bookieId = 9
+                        bookieId = "WilliamHill"
                     if "sport888" in link:
                         bookie = "888 sport"
-                        bookieId = 10
+                        bookieId = "888Sport"
                     if "betfair" in link:
                         bookie = "betfair"
-                        bookieId = 11
+                        bookieId = "Betfair"
                     if "interwetten" in link:
                         bookie = "interwetten"
-                        bookieId = 12
+                        bookieId = "Interwetten"
 
                     if contCuota == 0:
                         odd1 = float(celda_cuotas.text)
@@ -139,13 +139,18 @@ def leer():
             if odd1 != 0 and odd2 != 0 and odd3 != 0:
                 contPartidos = contPartidos+1
                 percentage = (1/odd1)+(1/odd2)+(1/odd3)
-                """ if percentage < 1: """
-                contPartidos = contPartidos+1
-                match = team1+" vs "+team2
-                percentage = percentage*100
-                percentage = 100-percentage
-                enviarPost(match, d1, team1, team2, odd1, odd2, odd3,
-                           bookie1_id, bookie2_id, bookie3_id, percentage,today)
-    
+                if percentage < 1:
+                    contPartidos = contPartidos+1
+                    match = team1+" vs "+team2
+                    percentage = percentage*100
+                    percentage = 100-percentage
+                    print(match+ " "+ str(percentage))
+                    print(bookie1+ " "+str(odd1))
+                    print(bookie2+ " "+str(odd2))
+                    
+                    print(bookie3+ " "+str(odd3))
+                    enviarPost(match, d1, team1, team2, odd1, odd2, odd3,
+                           bookie1_id, bookie2_id, bookie3_id, percentage,today) 
+    print("bucle")
 
 leer()
